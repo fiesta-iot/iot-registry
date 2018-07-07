@@ -1,0 +1,17 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ssn: <http://purl.oclc.org/NET/ssnx/ssn#>
+PREFIX iot-lite: <http://purl.oclc.org/NET/UNIS/fiware/iot-lite#>
+
+SELECT  (count(distinct ?o) as ?count) ?type
+WHERE {
+  ?o rdf:type/rdfs:subClassOf ssn:Observation .
+  ?o ssn:observedBy ?entity .
+  ?entity iot-lite:hasQuantityKind ?qk .
+  ?qk rdf:type ?type .
+  # Also can be linked to observedProperty but I think it is safer to go through the ssn:Sensor.
+#  ?observedProperty rdf:type ?observedPropertyType .
+#  ?observedPropertyType rdf:type ?type
+}
+GROUP BY ?type 
+ORDER BY DESC(?type)

@@ -1,0 +1,7 @@
+[
+  "http://api.smartsantander.eu#SmartSantanderTestbed",
+  "http://api.smartsantander.eu/v2/resources/urn:x-iot:smartsantander:u7jcfa:t72",
+  "http://api.smartsantander.eu#urn:x-iot:smartsantander:u7jcfa:t72.batteryLevel.sensor",
+  "http://api.smartsantander.eu#urn:x-iot:smartsantander:u7jcfa:t72.temperature-ambient.sensor",
+  "http://api.smartsantander.eu/v2/resources/urn:x-iot:smartsantander:u7jcfa:t3232"
+]

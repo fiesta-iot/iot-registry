@@ -1,0 +1,128 @@
+description: Queries interface
+/execute/{db}:
+  uriParameters:
+    db:
+      description: graph or triple store
+      enum: [resources, observations, global]
+  post:
+    description: Execute a SPARQL query on an specific graph or triple store.
+    queryParameters:
+      from:
+        description: start date for merging underlying graphs
+        type: string
+        example: 2015-05-23 or 20150523
+        required: false
+      to:
+        description: end date for merging underlying graphs
+        type: string
+        example: 2015-05-23 or 20150523
+        required: false
+      inference:
+        description: enable inference engine on the SPARQL execution
+        type: boolean
+        required: false
+        default: true
+      ask:
+        description: execute an ASK query prior to SELECT. Used to include appropiate headers when informing about no results in body.
+        type: boolean
+        required: false
+        default: true
+    body:
+      text/plain:
+    responses:
+      200:
+        description: Response including the stored query document.
+  /{id}:
+    uriParameters:
+      id:
+        description: the query
+        type: integer
+    get:
+      description: Execute an stored SPARQL query on an specific graph or triple store.
+      queryParameters:
+        from:
+          description: start date for merging underlying graphs
+          type: string
+          example: 2015-05-23 or 20150523
+          required: false
+        to:
+          description: end date for merging underlying graphs
+          type: string
+          example: 2015-05-23 or 20150523
+          required: false
+        inference:
+          description: enable inference engine on the SPARQL execution
+          type: boolean
+          required: false
+          default: true
+        ask:
+          description: execute an ASK query prior to SELECT. Used to include appropiate headers when informing about no results in body.
+          type: boolean
+          required: false
+          default: true
+      responses:
+        200:
+          description: Stored query document.
+/store:
+  get:
+    description: List all the queries stored.
+    responses:
+      200:
+        description: Response including a list of the queries.
+        body:
+          application/xml:
+          application/json:
+  post:
+    description: |
+      Create a new query.
+    body:
+      application/json:
+        schema: !include schemas/sparqlQuery-schema.json
+        example: !include examples/sparqlQuery-example.json
+      application/xml:
+        schema: !include schemas/sparqlQuery-xml-schema.xsd
+        example: !include examples/sparqlQuery-example.xml
+    responses:
+      200:
+        description: Response including the stored query document.
+        body:
+          application/xml:
+          application/json:
+  /{id}:
+    get:
+      description: |
+        Retrieve an stored query.
+
+        Query identifier
+      responses:
+        200:
+          description: Response including the query document.
+          body:
+            application/xml:
+            application/json:
+    put:
+      description: |
+        Update a query.
+
+        The new query document, including SPARQL, name, description, etc.
+      body:
+        application/json:
+          schema: !include schemas/sparqlQuery-schema.json
+          example: !include examples/sparqlQuery-example.json
+        application/xml:
+          schema: !include schemas/sparqlQuery-xml-schema.xsd
+          example: !include examples/sparqlQuery-example.xml
+      responses:
+        200:
+          description: Response including the stored query document.
+          body:
+            application/xml:
+            application/json:
+    delete:
+      description: Delete a query.
+      responses:
+        200:
+          description: Response including the stored query document.
+          body:
+            application/xml:
+            application/json:

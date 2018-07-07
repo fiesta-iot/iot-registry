@@ -1,0 +1,57 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ssn: <http://purl.oclc.org/NET/ssnx/ssn#>
+PREFIX iot-lite: <http://purl.oclc.org/NET/UNIS/fiware/iot-lite#>
+PREFIX dul: <http://www.loa.istc.cnr.it/ontologies/DUL.owl#>
+PREFIX time: <http://www.w3.org/2006/time#>
+PREFIX qu-quantity: <http://purl.oclc.org/NET/ssnx/qu/quantity#>
+PREFIX qu-unit: <http://purl.oclc.org/NET/ssnx/qu/unit#>
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+
+SELECT ?entity ?type ?deployment
+WHERE {
+
+# Testbeds are now being registered on an independent way, so doesn't have to be in resource document
+#  ?deployment rdf:type/rdfs:subClassOf* ssn:Deployment .
+#  ?deployment rdf:type ssn:Deployment .
+
+  ?platform rdf:type ssn:Platform .
+  ?platform geo:location ?location .
+  ?location rdf:type geo:Point .
+  ?location geo:lat ?lat .
+  ?location geo:long ?long .
+
+  # Direct subclassing
+  #?entity a ssn:SensingDevice .
+  # Indirect subclassing (derived from many direct)
+  ?entity rdf:type ?type .
+  ?type rdfs:subClassOf* ssn:SensingDevice .
+  # One liner
+  #?entity rdf:type/rdfs:subClassOf* ssn:SensingDevice .
+
+  # ssn:Devices
+  {
+    ?entity ssn:hasDeployment ?deployment .
+    ?entity ssn:onPlatform ?platform .
+  }
+  UNION
+  # ssn:SensingDevices
+  {
+    ?device ssn:hasDeployment ?deployment .
+    ?device ssn:hasSubSystem ?entity .
+    ?device ssn:onPlatform ?platform .
+  }
+
+  ?entity iot-lite:hasQuantityKind ?qk .
+  ?entity iot-lite:hasUnit ?qu .
+
+  ?qk rdf:type ?qkType .
+#  ?qkType rdfs:subClassOf* qu-quantity:QuantityKind .
+
+  ?qu rdf:type ?quType .
+#  ?quType rdfs:subClassOf* qu-unit:Unit .
+
+} ORDER BY DESC(?deployment)
+
+
+

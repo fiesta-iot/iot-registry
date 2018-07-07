@@ -1,0 +1,24 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ssn: <http://purl.oclc.org/NET/ssnx/ssn#>
+
+SELECT DISTINCT (COUNT(?entity) as ?count) ?deployment ?type
+WHERE {
+  ?deployment rdf:type/rdfs:subClassOf* ssn:Deployment .
+
+  # Indirect subclassing (derived from many direct)
+  ?entity rdf:type ?type .
+  ?type rdfs:subClassOf* ssn:SensingDevice .
+  # ssn:SensingDevice
+  {
+    ?entity ssn:hasDeployment ?deployment .
+  }
+  UNION
+  # ssn:SensingDevice linked to ssn:Device
+  {
+    ?device ssn:hasDeployment ?deployment .
+    ?device ssn:hasSubSystem ?entity .
+  }
+}
+group by ?deployment ?type
+order by ?deployment

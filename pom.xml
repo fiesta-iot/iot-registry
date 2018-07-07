@@ -1,0 +1,493 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>eu.fiesta-iot.platform</groupId>
+	<artifactId>iot-registry</artifactId>
+	<packaging>war</packaging>
+	<version>1.0.0</version>
+	<name>FIESTA-IoT IoT-Registry</name>
+	<url>http://maven.apache.org</url>
+
+	<parent>
+    	<groupId>es.tlmat.fiesta-iot</groupId>
+    	<artifactId>platform</artifactId>
+    	<version>1.0.0</version>
+    	<relativePath>../pom.xml</relativePath>
+  	</parent>
+
+	<!-- To deploy on the server run the following command: -->
+	<!-- wildfly:deploy -P <server-id> -->
+	<profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<service.name>iot-registry</service.name>
+				<configuration_file.properties>fiesta-iot.properties</configuration_file.properties>
+			</properties>
+		</profile>
+	</profiles>
+
+	<properties>
+		<download-maven-plugin.version>1.3.0</download-maven-plugin.version>
+	</properties>
+
+	<dependencies>
+	
+		<dependency>
+			<groupId>eu.fiesta-iot.utils</groupId>
+			<artifactId>commons</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>eu.fiesta-iot.utils</groupId>
+			<artifactId>semantics</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>eu.fiesta-iot.utils</groupId>
+			<artifactId>openam</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Binding for Log4J -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>${log4j.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- Log4j API and Core implementation required for binding -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-web</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+
+		<!-- Import the JAX-RS API, we use provided scope as the API is included
+			in JBoss WildFly -->
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxrs</artifactId>
+			<version>${jboss.resteasy.version}</version>
+			<!-- <scope>provided</scope> -->
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-servlet-initializer</artifactId>
+			<version>${jboss.resteasy.version}</version>
+			<!-- <scope>provided</scope> -->
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxb-provider</artifactId>
+			<version>${jboss.resteasy.version}</version>
+			<!-- <scope>provided</scope> -->
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-client</artifactId>
+			<version>${jboss.resteasy.version}</version>
+			<!-- <scope>provided</scope> -->
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jackson-provider</artifactId>
+			<version>${jboss.resteasy.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jackson2-provider</artifactId>
+			<version>${jboss.resteasy.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<version>2.8.7</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<version>${javax.cdi-api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>${javax.servlet.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- <dependency> -->
+		<!-- <groupId>org.hibernate.javax.persistence</groupId> -->
+		<!-- <artifactId>hibernate-jpa-2.1-api</artifactId> -->
+		<!-- <version>1.0.0.Final</version> -->
+		<!-- <scope>provided</scope> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.hibernate</groupId> -->
+		<!-- <artifactId>hibernate-core</artifactId> -->
+		<!-- <version>5.1.0.Final</version> -->
+		<!-- </dependency> -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>5.1.0.Final</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.2.4.Final</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- For connection pooling -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
+			<version>5.2.0.Final</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
+			<version>5.1.0.Final</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-connector.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>xml-apis</groupId>
+			<artifactId>xml-apis</artifactId>
+			<version>1.4.01</version>
+			<!-- <scope>provided</scope> -->
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.logging</groupId>
+			<artifactId>jboss-logging</artifactId>
+			<version>3.3.0.Final</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Jena library -->
+		<dependency>
+			<groupId>org.apache.jena</groupId>
+			<artifactId>apache-jena-libs</artifactId>
+			<type>pom</type>
+			<version>${jena.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>log4j</artifactId>
+					<groupId>log4j</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>slf4j-log4j12</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Jena Spatial library -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.apache.jena</groupId> -->
+		<!-- <artifactId>jena-spatial</artifactId> -->
+		<!-- <version>${jena.version}</version> -->
+		<!-- <exclusions> -->
+		<!-- <exclusion> -->
+		<!-- <groupId>log4j</groupId> -->
+		<!-- <artifactId>log4j</artifactId> -->
+		<!-- </exclusion> -->
+		<!-- <exclusion> -->
+		<!-- <groupId>org.slf4j</groupId> -->
+		<!-- <artifactId>slf4j-log4j12</artifactId> -->
+		<!-- </exclusion> -->
+		<!-- </exclusions> -->
+		<!-- </dependency> -->
+
+		<!-- Lucene libraries -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.apache.lucene</groupId> -->
+		<!-- <artifactId>lucene-core</artifactId> -->
+		<!-- <version>${lucene.version}</version> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.apache.lucene</groupId> -->
+		<!-- <artifactId>lucene-spatial</artifactId> -->
+		<!-- <version>${lucene.version}</version> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.apache.lucene</groupId> -->
+		<!-- <artifactId>lucene-analyzers-common</artifactId> -->
+		<!-- <version>${lucene.version}</version> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.apache.lucene</groupId> -->
+		<!-- <artifactId>lucene-queryparser</artifactId> -->
+		<!-- <version>${lucene.version}</version> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>com.spatial4j</groupId> -->
+		<!-- <artifactId>spatial4j</artifactId> -->
+		<!-- <version>${spatial.version}</version> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <artifactId>solr-solrj</artifactId> -->
+		<!-- <groupId>org.apache.solr</groupId> -->
+		<!-- <version>${solr.version}</version> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <artifactId>solr-core</artifactId> -->
+		<!-- <groupId>org.apache.solr</groupId> -->
+		<!-- <version>${solr.version}</version> -->
+		<!-- <exclusions> -->
+		<!-- <exclusion> -->
+		<!-- <groupId>log4j</groupId> -->
+		<!-- <artifactId>log4j</artifactId> -->
+		<!-- </exclusion> -->
+		<!-- <exclusion> -->
+		<!-- <groupId>org.slf4j</groupId> -->
+		<!-- <artifactId>slf4j-log4j12</artifactId> -->
+		<!-- </exclusion> -->
+		<!-- </exclusions> -->
+		<!-- </dependency> -->
+
+		<!-- JTS Topology Suite libs -->
+		<!-- To read geo data in 2) WKT literal format -->
+		<dependency>
+			<groupId>com.vividsolutions</groupId>
+			<artifactId>jts</artifactId>
+			<version>1.13</version>
+		</dependency>
+
+		<!-- Hashids library -->
+		<dependency>
+			<groupId>org.hashids</groupId>
+			<artifactId>hashids</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>${service.name}</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+						<configuration>
+							<files combine.children="append">
+								<file>conf/${build.profile.id}/persistence.properties</file>
+								<file>conf/${build.profile.id}/${configuration_file.properties}</file>		
+							</files>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.wildfly.plugins</groupId>
+				<artifactId>wildfly-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.googlecode.maven-download-plugin</groupId>
+				<artifactId>download-maven-plugin</artifactId>
+				<version>${download-maven-plugin.version}</version>
+<!--  				<version>1.3.1-SNAPSHOT</version> -->
+				<executions>
+					<execution>
+						<id>fiesta-iot</id>
+<!-- 						<phase>process-resources</phase> -->
+ 						<!-- <phase>initialize</phase> -->
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<!-- <url>http://purl.org/iot/ontology/fiesta-iot</url> -->
+							<url>http://ontology.fiesta-iot.eu/ontologyDocs/fiesta-iot.owl</url>
+							<outputDirectory>${project.build.outputDirectory}/etc/vocabularies</outputDirectory>
+							<!-- <outputDirectory>${basedir}/src/main/resources/etc/vocabularies</outputDirectory> -->
+							<outputFileName>fiesta-iot.owl</outputFileName>
+							<overwrite>true</overwrite>
+							<skipCache>true</skipCache>
+						</configuration>
+					</execution>
+					<execution>
+						<id>m3-lite</id>
+<!-- 						<phase>process-resources</phase> -->
+ 						<!-- <phase>initialize</phase> -->
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<!-- <url>http://purl.org/iot/vocab/m3-lite</url> -->
+							<url>http://ontology.fiesta-iot.eu/ontologyDocs/m3-lite.owl</url>
+							<outputDirectory>${project.build.outputDirectory}/etc/vocabularies</outputDirectory>
+ 							<!-- <outputDirectory>${basedir}/src/main/resources/etc/vocabularies</outputDirectory> -->
+							<outputFileName>m3-lite.owl</outputFileName>
+							<overwrite>true</overwrite>
+							<skipCache>true</skipCache>
+						</configuration>
+					</execution>
+					<execution>
+						<id>dul</id>
+						<phase>process-resources</phase>
+ 						<!-- <phase>initialize</phase> -->
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>http://www.loa-cnr.it/ontologies/DUL.owl</url>
+							<outputDirectory>${project.build.outputDirectory}/etc/vocabularies</outputDirectory>
+ 							<!-- <outputDirectory>${basedir}/src/main/resources/etc/vocabularies</outputDirectory> -->
+							<outputFileName>dul.owl</outputFileName>
+							<overwrite>true</overwrite>
+							<skipCache>true</skipCache>
+						</configuration>
+					</execution>
+					<execution>
+						<id>ssn</id>
+						<phase>process-resources</phase>
+ 						<!-- <phase>initialize</phase> -->
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<!-- <url>http://purl.oclc.org/NET/ssnx/ssn</url> -->
+							<url>http://www.w3.org/2005/Incubator/ssn/ssnx/ssn.owl</url>
+							<outputDirectory>${project.build.outputDirectory}/etc/vocabularies</outputDirectory>
+ 							<!-- <outputDirectory>${basedir}/src/main/resources/etc/vocabularies</outputDirectory> -->
+							<outputFileName>ssn.owl</outputFileName>
+							<overwrite>true</overwrite>
+							<skipCache>true</skipCache>
+						</configuration>
+					</execution>
+					<execution>
+						<id>iot-lite</id>
+						<phase>process-resources</phase>
+ 						<!-- <phase>initialize</phase> -->
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<!-- <url>http://purl.oclc.org/NET/UNIS/fiware/iot-lite</url> -->
+							<url>http://iot.ee.surrey.ac.uk/fiware/ontologies/iot-lite/iot-lite.rdf</url>
+							<outputDirectory>${project.build.outputDirectory}/etc/vocabularies</outputDirectory>
+ 							<!-- <outputDirectory>${basedir}/src/main/resources/etc/vocabularies</outputDirectory> -->
+							<outputFileName>iot-lite.rdf</outputFileName>
+							<overwrite>true</overwrite>
+							<skipCache>true</skipCache>
+						</configuration>
+					</execution>
+					<execution>
+						<id>wgs84_pos</id>
+						<phase>process-resources</phase>
+ 						<!-- <phase>initialize</phase> -->
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>http://www.w3.org/2003/01/geo/wgs84_pos</url>
+							<outputDirectory>${project.build.outputDirectory}/etc/vocabularies</outputDirectory>
+ 							<!-- <outputDirectory>${basedir}/src/main/resources/etc/vocabularies</outputDirectory> -->
+							<outputFileName>wgs84_pos.rdf</outputFileName>
+							<overwrite>true</overwrite>
+							<skipCache>true</skipCache>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											com.googlecode.maven-download-plugin
+										</groupId>
+										<artifactId>
+											download-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.3.0,)
+										</versionRange>
+										<goals>
+											<goal>wget</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

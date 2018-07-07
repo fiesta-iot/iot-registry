@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+	version="2.1">
+
+<!--   <persistence-unit name="FIESTAIoT" transaction-type="JTA"> -->
+	<persistence-unit name="FIESTAIoT" >
+	 <description>Database handling all FIESTA-IoT stored SQL based information</description>
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>java:jboss/datasources/fiesta_iotDS</jta-data-source>
+
+		<!-- <class>eu.fiesta_iot.platform.iot_service.storage.sql.EndpointMapper</class> -->
+		<class>eu.fiesta_iot.platform.iot_registry.storage.sql.SparqlQuery</class>
+		<class>eu.fiesta_iot.platform.iot_registry.storage.sql.QueryLog</class>
+		<class>eu.fiesta_iot.platform.iot_registry.storage.sql.SemanticStorageLog</class>
+		<class>eu.fiesta_iot.platform.iot_registry.idmapper.sql.HmacSqlResourceIdMapper</class>
+		<class>eu.fiesta_iot.platform.iot_registry.idmapper.sql.HmacSqlEndpointIdMapper</class>
+		<class>eu.fiesta_iot.platform.iot_registry.idmapper.sql.HmacSqlObservationIdMapper</class>
+
+		<properties>
+			<!-- <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" 
+				/> -->
+			<!-- <property name="hibernate.connection.username" value="fiesta" /> -->
+			<!-- <property name="hibernate.connection.password" value="fiesta" /> -->
+			<!-- <property name="hibernate.connection.url" -->
+			<!-- value="jdbc:mysql://localhost:3306/fiesta_iot?zeroDateTimeBehavior=convertToNull" 
+				/> -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<!-- <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect" 
+				/> -->
+				
+<!-- 			<property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform"/> -->
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.flushMode" value="FLUSH_AUTO" />
+			
+			<!-- Create tables on the fly -->
+			<!-- <property name="hibernate.hbm2ddl.auto" value="update" /> -->
+			<!-- Scan for annotated classes and Hibernate mapping XML files -->
+			<!-- <property name="hibernate.archive.autodetection" value="class, hbm"/> -->
+		</properties>
+	</persistence-unit>
+
+</persistence>

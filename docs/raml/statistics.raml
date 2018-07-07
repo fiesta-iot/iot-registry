@@ -1,0 +1,32 @@
+description: Statistics interface
+get:
+  description: Get a summary of the stored information.
+  responses:
+    200:
+      description: Total number of testbeds, resources and observations
+      body:
+        application/json:
+/resources:
+  get:
+    description: Get information about the stored resources
+    responses:
+      200:
+        description: Response including the information
+        body:
+          application/json:
+/observations:
+  get:
+    description: Get information about the stored observations
+    queryParameters:
+      group_by:
+        enum: [testbed, qk, testbed_and_qk]
+        default: testbed_and_qk
+        description: Define the information retrieve and how to present it.
+    responses:
+      200:
+        description: Response including the information
+        body:
+          application/json:
+
+
+

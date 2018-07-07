@@ -1,0 +1,17 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ssn: <http://purl.oclc.org/NET/ssnx/ssn#>
+
+SELECT ?o ?type
+WHERE {
+  # Direct subclassing
+  #?o a ssn:Observation .
+  # Indirect subclassing (derived from many direct)
+  ?o rdf:type ?type .
+  ?type rdfs:subClassOf* ssn:Observation .
+  # One liner
+  #?o  rdf:type/rdfs:subClassOf* ssn:Observation .
+}
+
+
+

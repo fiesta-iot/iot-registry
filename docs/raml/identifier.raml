@@ -1,0 +1,75 @@
+description: Translatates from/to FIESTA-IoT identifiers to/from testbed specific (original).
+/to_fiesta_iot:
+  description: Testbed specific to FIESTA-IoT identifier
+  get:
+    description: Takes a testbed identifier and an entity type to generate a FIESTA-IoT identifier.
+    queryParameters:
+      type:
+        enum:
+          - resource
+          - observation
+        default: resource
+        description: Entity type
+      value:
+        description: The identifier
+    responses:
+      200:
+        description: The FIESTA-IoT identifier.
+        body:
+          text/plain:
+  post:
+    queryParameters:
+      type:
+        enum:
+          - resource
+          - observation
+        default: resource
+        description: Entity type
+    body:
+      application/json:
+        schema: !include schemas/identifiers-schema.json
+        example: !include examples/identifiers-testbed-example.json
+      application/xml:
+    responses:
+      200:
+        body:
+          application/xml:
+          application/json:
+            schema: !include schemas/identifiers-schema.json
+            example: !include examples/identifiers-fiesta_iot-example.json
+/to_testbed:
+  get:
+    queryParameters:
+      type:
+        enum:
+          - resource
+          - observation
+        default: resource
+        description: Entity type
+      value:
+        description: The FIESTA-IoT identifier
+    responses:
+      200:
+        description: The original identifier.
+        body:
+          text/plain:
+  post:
+    queryParameters:
+      type:
+        enum:
+          - resource
+          - observation
+        default: resource
+        description: Entity type
+    body:
+      application/json:
+        schema: !include schemas/identifiers-schema.json
+        example: !include examples/identifiers-fiesta_iot-example.json
+      application/xml:
+    responses:
+      200:
+        body:
+          application/xml:
+          application/json:
+            schema: !include schemas/identifiers-schema.json
+            example: !include examples/identifiers-testbed-example.json

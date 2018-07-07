@@ -1,0 +1,35 @@
+{
+  "id": "http://api.smartsantander.eu#SmartSantanderTestbed",
+  "devices": [
+    {
+      "id": "http://api.smartsantander.eu/v2/resources/urn:x-iot:smartsantander:u7jcfa:t72",
+      "location": {
+        "lat": 43.47171,
+        "lon": -3.80014
+      },
+      "sensing_devices": [
+        {
+          "id": "http://api.smartsantander.eu#urn:x-iot:smartsantander:u7jcfa:t72.batteryLevel.sensor",
+          "qk": "BatteryLevel",
+          "uom": "Percent"
+        },
+        {
+          "id": "http://api.smartsantander.eu#urn:x-iot:smartsantander:u7jcfa:t72.temperature-ambient.sensor",
+          "type": "AirThermometer",
+          "qk": "TemperatureAmbient",
+          "uom": "DegreeCelsius"
+        }
+      ]
+    },
+    {
+      "id": "http://api.smartsantander.eu/v2/resources/urn:x-iot:smartsantander:u7jcfa:t3232",
+      "location": {
+        "lat": 43.47175,
+        "lon": -3.80024
+      },
+      "type": "AirThermometer",
+      "qk": "TemperatureAmbient",
+      "uom": "DegreeCelsius"
+    }
+  ]
+}

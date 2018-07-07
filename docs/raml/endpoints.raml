@@ -1,0 +1,28 @@
+description: Endpoints interface
+/{id}:
+  uriParameters:
+    id:
+      description: Identifier
+      type: string
+      pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
+  get:
+    description: Get the information from the endpoint
+    responses:
+      200:
+        description: Response including the information
+        body:
+          text/plain:
+      404:
+        description: Not found
+  /original_id:
+    get:
+      description: Get the original endpoint URL
+      responses:
+        200:
+          description: Response including the information
+          body:
+            text/plain:
+        404:
+          description: Not found
+
+

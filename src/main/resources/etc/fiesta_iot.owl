@@ -1,0 +1,16 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://ontology.fiesta-iot.eu/ontologyDocs/fiesta-iot.owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+>
+<owl:Ontology rdf:about="">
+     <owl:imports rdf:resource="http://purl.org/iot/ontology/fiesta-iot"/>
+<!--     <owl:imports rdf:resource="http://purl.org/iot/vocab/m3-lite"/> -->
+<!--     <owl:imports rdf:resource="http://www.loa-cnr.it/ontologies/DUL.owl"/> -->
+<!--     <owl:imports rdf:resource="http://purl.oclc.org/NET/ssnx/ssn"/> -->
+<!--     <owl:imports rdf:resource="http://purl.oclc.org/NET/UNIS/fiware/iot-lite"/> -->
+</owl:Ontology>
+
+</rdf:RDF>

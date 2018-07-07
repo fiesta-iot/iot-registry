@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+    </Console>
+    <RollingFile name="DailyRollingFile"
+      fileName="${sys:jboss.server.log.dir}/iot-registry/iot-registry.log"
+      filePattern="${sys:jboss.server.log.dir}/iot-registry/iot-registry.%d{yyyy-MM-dd}-%i.log.gz"
+      ignoreExceptions="false" bufferedIO="true" immediateFlush="true">
+      <PatternLayout>
+        <!-- <Pattern>%d %p %c{1.} [%t] %m%n</Pattern> -->
+        <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Pattern>
+      </PatternLayout>
+      <Policies>
+        <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+        <SizeBasedTriggeringPolicy size="250 MB" />
+      </Policies>
+    </RollingFile>
+  </Appenders>
+  <Loggers>
+    <Root level="WARN">
+<!--      <AppenderRef ref="Console" /> -->
+      <AppenderRef ref="DailyRollingFile" />
+    </Root>
+    <Logger name="eu.fiesta_iot.platform.iot_registry" level="INFO" />
+		<Logger name="eu.fiesta_iot.platform.commons" level="INFO" />
+    <!-- Log to check if ontology files are properly included or not /> -->
+    <!-- <Logger name="org.apache.jena.util" level="TRACE" /> -->
+    <!-- <Logger name="org.apache.jena.riot.system.stream" level="TRACE" /> -->
+    <!-- <Logger name="org.apache.jena" level="WARN" /> -->
+  </Loggers>
+</Configuration>

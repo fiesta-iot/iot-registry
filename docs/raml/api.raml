@@ -1,0 +1,20 @@
+#%RAML 0.8
+title: IoT-Registry API documentation
+baseUri: ${iot-registry.api_base_uri}
+protocols: [ HTTP ]
+
+/testbeds: !include testbeds.raml
+
+/resources: !include resources.raml
+
+/observations: !include observations.raml
+
+/queries: !include queries.raml
+
+/endpoints: !include endpoints.raml
+
+/utils:
+  description: "Functionalities to help working with semantic entities as defined within FIESTA-IoT project"
+  /identifier: !include identifier.raml
+
+/statistics: !include statistics.raml

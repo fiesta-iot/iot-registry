@@ -1,0 +1,55 @@
+# This SPARQL sentence is validating an already stored observation
+# To validate a non stored document remove the type related validations for uom, observedProperty and observedBy
+# We need to check that uom and qk are correctly derived from qu-unit and qu-quantity
+
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ssn: <http://purl.oclc.org/NET/ssnx/ssn#>
+PREFIX iot-lite: <http://purl.oclc.org/NET/UNIS/fiware/iot-lite#>
+PREFIX dul: <http://www.loa.istc.cnr.it/ontologies/DUL.owl#>
+PREFIX time: <http://www.w3.org/2006/time#>
+PREFIX qu-quantity: <http://purl.oclc.org/NET/ssnx/qu/quantity#>
+PREFIX qu-unit: <http://purl.oclc.org/NET/ssnx/qu/unit#>
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+
+SELECT ?o ?observedBy
+WHERE {
+  ?o rdf:type ?observationType .
+  ?observationType rdfs:subClassOf* ssn:Observation .
+
+  ?o ssn:observationResult ?observationResult .
+  ?observationResult rdf:type ?sensorOutputType .
+  ?sensorOutputType rdfs:subClassOf* ssn:SensorOutput .
+  ?observationResult ssn:hasValue ?observationValue .
+
+  ?observationValue rdf:type ?observationValueType .
+  ?observationValueType rdfs:subClassOf* ssn:ObservationValue .
+  ?observationValue iot-lite:hasUnit ?uom .
+  ?observationValue dul:hasDataValue ?value .
+
+#  ?uom rdf:type ?uomType .
+#  ?uomType rdfs:subClassOf* qu-unit:Unit .
+
+  ?o geo:location ?observationLocation .
+  ?observationLocation rdf:type ?observationLocationType .
+  ?observationLocationType rdfs:subClassOf* geo:Point .
+  ?observationLocation geo:lat ?lat .
+  ?observationLocation geo:long ?long .
+
+  ?o ssn:observedBy ?observedBy .
+#  ?observedBy rdf:type ?observedByType .
+#  ?observedByType rdfs:subClassOf* ssn:Sensor .
+
+  ?o ssn:observationSamplingTime ?observationSamplingTime .
+  ?observationSamplingTime rdf:type ?observationSamplingTimeType .
+  ?observationSamplingTimeType rdfs:subClassOf* time:Instant .
+  ?observationSamplingTime time:inXSDDateTime ?time .
+
+  ?o ssn:observedProperty ?observedProperty .
+#  ?observedProperty rdf:type ?observedPropertyType .
+#  ?observedPropertyType rdfs:subClassOf* qu-quantity:QuantityKind .
+}
+
+
+

@@ -1,0 +1,12 @@
+{
+  "observed_by": "http://api.smartsantander.eu#urn:x-iot:smartsantander:u7jcfa:t72.temperature-ambient.sensor",
+  "location": {
+    "lat": 43.47171,
+    "lon": -3.80014
+  },
+  "quantity_kind": "TemperatureAmbient",
+  "value": "15.3",
+  "format": "float",
+  "unit": "DegreeCelsius",
+  "timestamp": "2016-12-19T16:32:21.829+01:00"
+}

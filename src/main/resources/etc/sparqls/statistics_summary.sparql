@@ -1,0 +1,12 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ssn: <http://purl.oclc.org/NET/ssnx/ssn#>
+
+SELECT  (count(distinct ?o) as ?count_observations) (count(distinct ?deployment) as ?count_deployments)  (count(distinct ?device) as ?count_devices)
+WHERE {
+  {?o rdf:type/rdfs:subClassOf ssn:Observation .}
+  UNION
+  {?device rdf:type/rdfs:subClassOf ssn:SensingDevice .}
+  UNION
+  {?deployment rdf:type/rdfs:subClassOf ssn:Deployment .}
+} 
