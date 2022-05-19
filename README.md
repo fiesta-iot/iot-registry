@@ -333,5 +333,5 @@ The FIESTA-IoT IoT-Registry component has been written by:
 - [Juan Ramon Santana](https://github.com/juanrasantana)
 
 ## Acknowledgements
-This work is partially funded by the European project\Federated Interoperable Semantic IoT/cloud Testbeds and Applications (FIESTA-IoT) from the European Union’s Horizon 2020 Programme with the Grant Agreement No. CNECT-ICT-643943. The authors would also like to thank the FIESTA-IoT consortium for the fruitful discussions.
+This work is partially funded by the European project\Federated Interoperable Semantic IoT/cloud Testbeds and Applications (FIESTA-IoT) from the European Union’s Horizon 2020 Programme with the Grant Agreement No. CNECT-ICT-643943. This work is also partially funded by the Spanish Research Agency (AEI) through the project\Future Internet Enabled Resilient Cities (FIERCE) with the Grant Agreement No. RTI2018-093475-A-I00. The authors would also like to thank the FIESTA-IoT consortium for the fruitful discussions.
 
